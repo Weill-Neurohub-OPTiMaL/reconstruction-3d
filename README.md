@@ -1,5 +1,5 @@
 # reconstruction-3d
-Contains calibration, reconstruction, and animation code and documentation for 3D reconstruction in OpenPose. Separated 1) calibration 2) reconstruction and 3) animation folders. Assumes that you already have the OpenPose repo cloned on your machine and that you are not using flir cameras.
+Contains calibration, reconstruction, and animation code and documentation for 3D reconstruction in OpenPose. Separated into 1) calibration 2) reconstruction and 3) animation folders. Assumes that you already have the OpenPose repo cloned on your machine and that you are not using flir cameras.
 
 ## calibration
 If you want to do reconstruction from the patient's home, move the calibration matrices under the `patient_home_calibration_matrices` directory to your openpose repo under the directory `openpose/models/cameraParameters/flir`.
