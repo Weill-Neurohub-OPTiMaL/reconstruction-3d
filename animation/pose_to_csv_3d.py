@@ -236,7 +236,9 @@ def json_to_csv(source_dir, save_path):
     print("os.path.dirname(save_path): ", os.path.dirname(save_path))
     # out_name = os.path.join(os.path.dirname(save_path), f'pose_{video_name}.csv')
     # print("csv name:", out_name)
-    out_name = os.path.dirname(save_path) + '/json_to_csv_3d/pose_3d.csv'
+    # out_name = os.path.dirname(save_path) + '/json_to_csv_3d/pose_3d.csv'
+    out_name = os.path.dirname(save_path) + '/11-17-21_videos/pose_3d.csv'
+    # out_name = 'C:/Users/User/CSE600/wasabi_videos/11-17-21_videos/11-17-21_3d-keypoints'
     pose_df.to_csv(out_name)
 
 

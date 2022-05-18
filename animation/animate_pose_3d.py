@@ -17,7 +17,7 @@ warnings.filterwarnings('ignore')
 # Paths & vars
 # pose_folder = r'D:\Neurohub Systems\DataNet\temp-data\20211117'
 # pose_csv = r'D:\Neurohub Systems\DataNet\temp-data\raw_pose_json\20211117\pose_video0_2021-11-17-20-08-03.csv'
-pose_csv = r'C:\Users\User\CSE600\openpose\json_to_csv_3d\pose_3d.csv'
+pose_csv = r'C:\Users\User\CSE600\wasabi_videos\11-17-21_videos\pose_3d.csv'
 
 # def add_datetime(df, t_str):
 #     df['time_secs'] = pd.to_datetime(df[t_str], unit='ms') \

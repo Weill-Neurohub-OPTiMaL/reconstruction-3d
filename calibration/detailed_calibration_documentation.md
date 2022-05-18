@@ -24,7 +24,8 @@ I will break down how I did it because the provided calibration tutorial doesn't
 ### Intrinsic Parameter Calibration
 1) Print out this pdf chessboard: https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/advanced/Chessboard_in_PDF/pattern.pdf .
 2) Use your computer webcam. Following the "General Quality Tips" here https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/advanced/calibration_module.md#general-quality-tips, take a 20 second video of you holding the chessboard entirely in the camera frame at different distances from the camera frame. 
-3) Use this website https://ezgif.com/video-to-png to create 200 images from the video. Save all images in a directory {intrinsic_images_folder_path}.
+3) Use this website https://ezgif.com/video-to-png to create 200 images from the video. Save all images in a directory {intrinsic_images_folder_path}. 
+**IMPORTANT**: When using patient videos, use a local program such as ffmpeg to get your images, so you do not have to upload confidential videos to a website online. (details for how to use ffmpeg in a section below)
 4) In a Linux terminal (I used GitBash), run the following command, making sure that you are the openpose directory:
 `./build/x64/Release/Calibration.exe --mode 1 --grid_square_size_mm 30.0 --grid_number_inner_corners "8x6" --camera_serial_number {8-digit_camera_serial_number} --calibration_image_dir {intrinsic_images_folder_path}`.
 This will create a directory called `images_with_corners` inside the `{intrinsic_images_folder_path}` directory that has calibration lines on the chessboard. It will also create a file called `{8-digit_camera_serial_number}.xml` in the directory `openpose/models/cameraParameters/flir`.
@@ -39,8 +40,19 @@ This will create a directory called `images_with_corners` inside the `{intrinsic
 * Under the `Controls` window, click `Start Recording`. 
 * Save the video to your machine.
 * The video you saved will have multiple videos from different cameras perspectives in the same video. Using https://clideo.com/crop-video, create a separate video for each camera perspectives by cropping out the other cameras' perspectives. Save one video for each camera perspective. 
-2) Using the same process as you did with the intrinsic calibration, use this website https://ezgif.com/video-to-png to create 200 images from the video. Save all images in a directory {extrinsic_images_folder_path}.
+2) Using the same process as you did with the intrinsic calibration, use this website https://ezgif.com/video-to-png to create 200 images from the video. Save all images in a directory {extrinsic_images_folder_path}. 
+**IMPORTANT**: Again, when using patient videos, use a local program such as ffmpeg to get your images, so you do not have to upload confidential videos to a website online. (details for how to use ffmpeg in a section below)
 3) Generate the undistorted images. For each camera, run the following command making sure you're in the `openpose/build/x64/Release` directory, creating a different {extrinsic_images_folder_path} for each camera: `./bin/OpenPoseDemo.exe --num_gpu 0 --image_dir /c/Users/User/CSE600/computer-cam-extrinsic-1 --frame_undistort --camera_parameter_path "models/cameraParameters/flir/18079958.xml" --write_images /c/Users/User/CSE600/computer-cam-extrinsic-1/extrinsics`.
 4) Consolidate all of the undistorted images from the previous step into one directory `{consolidated_extrinsic_undistorted_images} `. Use the naming convention specified here: https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/advanced/calibration_module.md#naming-convention-for-the-output-images
 5) Run the calibration executable between each pair of cameras. There are two flags `--cam0` and `--cam1`. The parameters for these cameras are integers starting from 0 corresponding to an individual camera. 0 is the leftmost camera, 1 is the camera to the right of the 0th camera, and so on. If you have two cameras, here is an example command. You have to be in the outer most `openpose` directory for this or else you won't be able to access your intrinsic xml files: `./build/x64/Release/Calibration.exe --mode 2 --grid_square_size_mm 30.0 --grid_number_inner_corners 8x6 --omit_distortion --calibration_image_dir {consolidated_extrinsic_undistorted_images} --cam0 0 --cam1 1`. This will output your final projection matrix to the terminal. It should be a 3x4 matrix.
+
+## Using ffmpeg
+FFmpeg is a free and open source software project that you can use to extract iamges at a certain frame rate from a video.
+
+Download it here: https://ffmpeg.org/. Detailed instructions for downloading are here: https://www.wikihow.com/Install-FFmpeg-on-Windows. You can run the command following command to get the images:
+
+`ffmpeg -i videofile.mov -r 1 image-%04d.png`
+* -i specifies the name of the video file
+* -r specifies the rate of frames to capture. For example, 1 will save a frame every second, 0.5 will save every 2 seconds, 0.2 every 5 seconds, and 30 every 1/30th of a second.
+* The last parameter is the name of the output images. For the above example, the images will be named `image-0001`, `image-0002`, etc.
 

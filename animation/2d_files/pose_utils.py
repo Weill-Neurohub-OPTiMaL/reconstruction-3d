@@ -152,9 +152,10 @@ def draw_body_frame(segments, kp_df_row, ax):
     # plot each visible body segment
     if len(segments) == 0:  # first frame
         for i, kp_idx in enumerate(kp_idx_pairs):
+            print("kp_idx: ", kp_idx)
             segments.append(draw_body_segment(frame_data, kp_idx, ax))
-        ax.set_xlim(600, 2500) #4096
-        ax.set_ylim(-100, 2000)
+        ax.set_xlim(0, 3000) #4096
+        ax.set_ylim(0, 2000)
         ax.invert_yaxis()
         ax.set_aspect(1)
     else:  # subsequent frames

@@ -85,10 +85,13 @@ def draw_body_segment(frame_data, kp_idx, ax):
     else:
         print("segment_data[0]: ", segment_data[0])
         x = [segment_data[0][0], segment_data[1][0]]
-        y = [segment_data[0][1], segment_data[1][1]]
+        y = [-1 * segment_data[0][1], -1 * segment_data[1][1]]
         z = [segment_data[0][2], segment_data[1][2]]
     # plot the segment
     segment = ax.plot3D(x, y, z, clr + 'o-')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
     print("segment: ", segment[0].get_data_3d())
 
     return segment
@@ -104,8 +107,8 @@ def update_body_segment(frame_data, kp_idx, segment):
         z = [10, 10]
     else:
         x = [segment_data[0][0], segment_data[1][0]]
-        y = [segment_data[0][1], segment_data[1][1]]
-        z = [segment_data[0][2], segment_data[1][2]]
+        y = [-1 * segment_data[0][1], -1 * segment_data[1][1]]
+        z = [-1 * segment_data[0][2], -1 * segment_data[1][2]]
     # update the segment data
     segment.set_data_3d(x, y, z)
     print("UDPATED SEGMENT: ", segment.get_data_3d())
@@ -159,8 +162,9 @@ def draw_body_frame(segments, kp_df_row, ax):
             segments.append(draw_body_segment(frame_data, kp_idx, ax))
         ax.set_xlim(-0.5, 0.5)  # 600 to 2500
         ax.set_ylim(-0.5, 0.5)  # -100 to 2000
-        ax.set_zlim(0.5, 2)  # 0 to 2000
-        ax.invert_yaxis()
+        ax.set_zlim(-2, 2)  # 0 to 2000
+        # ax.invert_xaxis()
+        # ax.invert_yaxis()
         ax.set_aspect("auto")
     else:  # subsequent frames
         for i, kp_idx in enumerate(kp_idx_pairs):
