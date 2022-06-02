@@ -13,3 +13,6 @@ If you want to do reconstruction from the patient's home, move the calibration m
 
 ## animation
 Code for 2D and 3D animations that takes json files of 2D and 3D keypoints as input. See `3D_animation.md` for more information on how to run the animation.
+
+## dev log for this repo
+https://github.com/Weill-Neurohub-OPTiMaL/ProjectDocs/wiki/3D-Pose-dev-log
