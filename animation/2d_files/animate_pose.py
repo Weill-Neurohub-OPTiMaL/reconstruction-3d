@@ -19,7 +19,11 @@ warnings.filterwarnings('ignore')
 # pose_csv = r'D:\Neurohub Systems\DataNet\temp-data\raw_pose_json\20211117\pose_video0_2021-11-17-20-08-03.csv'
 # pose_csv = r'C:\Users\User\CSE600\openpose\csv_files\pose_video0_2022-03-15-10-50-03.csv'
 # pose_csv = r'C:\Users\User\CSE600\wasabi_videos\11-17-21_videos\11-17-21_video0_pose_2d.csv'
-pose_csv = r'C:\Users\User\CSE600\wasabi_videos\11-17-21_videos\pose_video0_2021-11-17-20-08-03.csv'
+# pose_csv = r'C:\Users\User\CSE600\wasabi_videos\11-17-21_videos\pose_video0_2021-11-17-20-08-03.csv'
+# pose_csv = r'C:\Users\User\CSE600\wasabi_videos\3-11-22_videos\pose_video0_2022-03-11-10-06-04.csv'
+# pose_csv = r'C:\Users\User\CSE600\wasabi_videos\3-11-22_videos\03-11-22_video0_pose_2d_full_video_version.csv'
+# pose_csv = r'C:\Users\User\CSE600\wasabi_videos\3-11-22_videos\pose_video0_2022-03-11-10-06-04.csv'
+pose_csv = r'C:\Users\User\CSE600\wasabi_videos\3-11-22_videos\03-11-22_video0_pose_2d_video_version.csv'
 
 def add_datetime(df, t_str):
     df['time_secs'] = pd.to_datetime(df[t_str], unit='ms') \

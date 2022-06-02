@@ -8,6 +8,8 @@ import json, sys, datetime, os, fnmatch, hashlib, re, glob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
+import ctypes
 
 from scipy.signal import butter, filtfilt
 
@@ -42,12 +44,12 @@ from scipy.signal import butter, filtfilt
 
 
 def convert_openpose_csv_frame(csv_data, idx):
-    print("IN CONVERT_OPENPOSE_CSV_FRAME! and the idx is: ", idx)
+    # print("IN CONVERT_OPENPOSE_CSV_FRAME! and the idx is: ", idx)
     chunked_list = []
     cols_list = ['Body', 'L Hand', 'R Hand', 'Face']
     for i, col_name in enumerate(cols_list):
         points_list = list(csv_data.loc[csv_data.index[idx], col_name])
-        print("points_list: ", points_list)
+        # print("points_list: ", points_list)
         if col_name == 'Body':
             chunked_list = chunked_list \
                            + [points_list[i:i + 4]
@@ -56,7 +58,8 @@ def convert_openpose_csv_frame(csv_data, idx):
             chunked_list = chunked_list \
                           + [points_list[i:i + 4]
                              for i in range(0, len(points_list), 4)]
-        print("chunked_list: ", chunked_list)
+        # print("chunked_list: ", chunked_list)
+    # print("chunked_list: ", chunked_list)
     return chunked_list
 
 
@@ -65,7 +68,7 @@ def convert_openpose_csv_frame(csv_data, idx):
 def draw_body_segment(frame_data, kp_idx, ax):
     # extract the appropriate segment (pair of keypoints)
     segment_data = [frame_data[i] for i in kp_idx]
-    print("segment_data: ", segment_data)
+    # print("segment_data: ", segment_data)
     # assign color: left side body is blue, right is red, midline is purple
     left_idx = [5, 6, 7, 12, 13, 14, 16, 18, 19, 20, 21] \
                 + [i + 25 for i in range(21)]
@@ -83,7 +86,7 @@ def draw_body_segment(frame_data, kp_idx, ax):
         y = [10, 10]
         z = [10, 10]
     else:
-        print("segment_data[0]: ", segment_data[0])
+        # print("segment_data[0]: ", segment_data[0])
         x = [segment_data[0][0], segment_data[1][0]]
         y = [-1 * segment_data[0][1], -1 * segment_data[1][1]]
         z = [segment_data[0][2], segment_data[1][2]]
@@ -92,7 +95,10 @@ def draw_body_segment(frame_data, kp_idx, ax):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    print("segment: ", segment[0].get_data_3d())
+    print("segment type: ", type(segment))
+    print("segment[0]: ", type(segment[0]))
+    print("segment len: ", len(segment))
+    print("segment[0].get_data_3d: ", segment[0].get_data_3d())
 
     return segment
 
@@ -111,7 +117,7 @@ def update_body_segment(frame_data, kp_idx, segment):
         z = [-1 * segment_data[0][2], -1 * segment_data[1][2]]
     # update the segment data
     segment.set_data_3d(x, y, z)
-    print("UDPATED SEGMENT: ", segment.get_data_3d())
+    # print("UDPATED SEGMENT: ", segment.get_data_3d())
 
 
 def draw_body_frame(segments, kp_df_row, ax):
@@ -181,10 +187,33 @@ def process_pose_csvs(vid_start_time, vid_end_time, pose_file):
     for idx in range(0, 518):
         chunked_kp_list.append(convert_openpose_csv_frame(csv_data, idx))
     kp_df = pd.DataFrame(chunked_kp_list)
-    print("csv dataframe created!", len(chunked_kp_list))
+    print("csv dataframe created! len: ", len(kp_df))
+    print("kp_df: ", kp_df)
     return kp_df
 
 
 # def load_pose_file(filename):
 #     return pd.read_csv(filename, index_col=[0], header=[0, 1, 2, 3])
 
+def open_video(filename):
+    cap = cv2.VideoCapture(filename)
+    user32 = ctypes.windll.user32
+    screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    while(cap.isOpened()):
+        ret, frame = cap.read()
+        if frame is None:
+            break
+        width = int(frame.shape[1] * (50 / 100))
+        height = int(frame.shape[0] * (50 / 100))
+        dim = (width, height)
+        resized = cv2.resize(frame, dim)
+        # moved = cv2.moveWindow("frame", int(screensize[0] - (screensize[0] * 0.5)), int(screensize[1] - (screensize[1] * 0.5)))
+        cv2.imshow('frame', resized)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+# %%

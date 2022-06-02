@@ -4,13 +4,15 @@
 ## 2D Reconstruction
 You can use either an image directory or a video. I did my reconstruction by getting images at a frame rate of 30 frames per second from a video and then running reconstruction on that image directory. I used FFmpeg for this -- download it here: https://ffmpeg.org/. Detailed instructions for downloading are here: https://www.wikihow.com/Install-FFmpeg-on-Windows. You can run the command following command to get the images:
 
-`ffmpeg -i videofile.mov -r 1 image-%04d.png`
+`ffmpeg -i videofile.mov -r 30 image-%04d.png`
 * -i specifies the name of the video file
 * -r specifies the rate of frames to capture. For example, 1 will save a frame every second, 0.5 will save every 2 seconds, 0.2 every 5 seconds, and 30 every 1/30th of a second.
 * The last parameter is the name of the output images. For the above example, the images will be named `image-0001`, `image-0002`, etc.
 
 Here is an example of a command for 2D reconstruction from the image directory `/c/Users/User/openpose/examples/media/wasabi_images/`:
 `./build/x64/Release/OpenPoseDemo.exe --image_dir /c/Users/User/openpose/examples/media/wasabi_images/ --hand --face --write_json /c/Users/User/CSE600/openpose/2d_keypoints_1 --display 0 --render_pose 0`
+
+
 
 ## 3D Reconstruction
 For 3D reconstruction, the images have to be in a specific order and from specific cameras. 

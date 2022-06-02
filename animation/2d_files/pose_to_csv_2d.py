@@ -226,8 +226,8 @@ def json_to_csv(source_dir, save_path):
     pose_df.columns = big_index
 
     # out_name = os.path.join(os.path.dirname(save_path), f'pose_{video_name}.csv')
-    # print("csv name:", out_name)
-    out_name = os.path.dirname(save_path) + '/json_to_csv/pose_2d.csv'
+    print("out_name:", os.path.dirname(save_path))
+    out_name = os.path.dirname(save_path) + '/3-11-22_videos'
     pose_df.to_csv(out_name)
 
 

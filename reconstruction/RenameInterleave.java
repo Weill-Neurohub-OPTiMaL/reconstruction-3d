@@ -7,7 +7,7 @@ public class RenameInterleave {
 
     public static void main(String[] args) throws IOException {
 
-        String dir_name = "C:\\Users\\User\\CSE600\\wasabi_videos\\11-17-21_videos\\all_videos_images_interleaved";
+        String dir_name = "C:\\Users\\User\\CSE600\\wasabi_videos\\3-11-22_videos\\video_tapping_images_2m_interleaved_naming";
         File dir = new File(dir_name);
 
         // Get list of all the files in form of String Array
