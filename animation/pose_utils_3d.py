@@ -12,7 +12,52 @@ import cv2
 import ctypes
 
 from scipy.signal import butter, filtfilt
+from scipy.linalg import norm
 
+def draw_cylinder(p0, p1):
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111, projection='3d')
+    # origin = np.array([0, 0, 0])
+    #axis and radius
+    # p0 = np.array([1, 3, 2])
+    # p1 = np.array([8, 5, 9])
+    R = 0.01
+    #vector in direction of axis
+    v = p1 - p0
+    print("v: ", v)
+    #find magnitude of vector
+    mag = norm(v)
+    print("mag: ", mag)
+    #unit vector in direction of axis
+    v = v / mag
+    #make some vector not in the same direction as v
+    not_v = np.array([1, 0, 0])
+    if (v == not_v).all():
+        not_v = np.array([0, 1, 0])
+    #make vector perpendicular to v
+    n1 = np.cross(v, not_v)
+    #normalize n1
+    print("p0: ", p0)
+    print("p1: ", p1)
+    print("n1: ", n1)
+    n1 /= norm(n1)
+    #make unit vector perpendicular to v and n1
+    n2 = np.cross(v, n1)
+    #surface ranges over t from 0 to length of axis and 0 to 2*pi
+    t = np.linspace(0, mag, 100)
+    theta = np.linspace(0, 2 * np.pi, 100)
+    #use meshgrid to make 2d arrays
+    t, theta = np.meshgrid(t, theta)
+    #generate coordinates for surface
+    X, Y, Z = [p0[i] + v[i] * t + R * np.sin(theta) * n1[i] + R * np.cos(theta) * n2[i] for i in [0, 1, 2]]
+    return X, Y, Z
+    # ax.plot_surface(X, Y, Z)
+    # #plot axis
+    # ax.plot(*zip(p0, p1), color = 'red')
+    # ax.set_xlim(0, 10)
+    # ax.set_ylim(0, 10)
+    # ax.set_zlim(0, 10)
+    # plt.show()
 
 # def load_file(filename):
 #     return pd.read_csv(filename, index_col=[0], header=[0, 1, 2, 3])
@@ -89,16 +134,25 @@ def draw_body_segment(frame_data, kp_idx, ax):
         # print("segment_data[0]: ", segment_data[0])
         x = [segment_data[0][0], segment_data[1][0]]
         y = [-1 * segment_data[0][1], -1 * segment_data[1][1]]
-        z = [segment_data[0][2], segment_data[1][2]]
+        z = [-1 * segment_data[0][2], -1 * segment_data[1][2]]
     # plot the segment
-    segment = ax.plot3D(x, y, z, clr + 'o-')
+    # segment = ax.plot3D(x, y, z, clr + 'o-')
+    p0 = np.array([x[0], y[0], z[0]])
+    p1 = np.array([x[1], y[1], z[1]])
+    if p0[0] == p1[0] and p0[1] == p1[1] and p0[2] == p1[2]:
+        segment = ax.plot3D(x, y, z, clr + 'o-')
+    else:
+        cyl_x, cyl_y, cyl_z = draw_cylinder(p0, p1)
+        segment = ax.plot_surface(cyl_x, cyl_y, cyl_z)
+        segment = ax.plot3D(x, y, z, clr + 'o-')
+        ax.plot(*zip(p0, p1), clr + 'o-')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    print("segment type: ", type(segment))
-    print("segment[0]: ", type(segment[0]))
-    print("segment len: ", len(segment))
-    print("segment[0].get_data_3d: ", segment[0].get_data_3d())
+    # print("segment type: ", type(segment))
+    # print("segment[0]: ", type(segment[0]))
+    # print("segment len: ", len(segment))
+    # print("segment[0].get_data_3d: ", segment[0].get_data_3d())
 
     return segment
 
