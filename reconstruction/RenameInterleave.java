@@ -22,23 +22,28 @@ public class RenameInterleave {
         // Loop for reading the contents of all the files in the directory.
         int ctr = 1;
         for (int i = 1 ; i <= fileNames.length / NUM_CAMS ; i++) {
+            
+            String num = padWithZeros(i, 4);
+            String firstFilename = "cam0-" + num + ".png";
+            String secondFilename = "cam4-" + num + ".png";
+            String thirdFilename = "cam8-" + num + ".png";
 
-            String firstFilename = "cam0 (" + i + ").png";
-            String secondFilename = "cam4 (" + i + ").png";
-            String thirdFilename = "cam8 (" + i + ").png";
 
-            File file_1 = new File(dir_name + "\\" + firstFilename);
-            File dest_1 = new File(dir_name + "\\" + "renamed_" + ctr + ".png");
-
-            ctr++;
-
-            File file_2 = new File(dir_name + "\\" + secondFilename);
-            File dest_2 = new File(dir_name + "\\" + "renamed_" + ctr + ".png");
+            String ctr1 = padWithZeros(ctr, 4);
+            File file_1 = new File(dir_name + "/" + firstFilename);
+            File dest_1 = new File(dir_name + "/" + "renamed_" + ctr1 + ".png");
 
             ctr++;
 
-            File file_3 = new File(dir_name + "\\" + thirdFilename);
-            File dest_3 = new File(dir_name + "\\" + "renamed_" + ctr + ".png");
+            String ctr2 = padWithZeros(ctr, 4);
+            File file_2 = new File(dir_name + "/" + secondFilename);
+            File dest_2 = new File(dir_name + "/" + "renamed_" + ctr2 + ".png");
+
+            ctr++;
+
+            String ctr3 = padWithZeros(ctr, 4);
+            File file_3 = new File(dir_name + "/" + thirdFilename);
+            File dest_3 = new File(dir_name + "/" + "renamed_" + ctr3 + ".png");
 
             ctr++;
 
@@ -51,12 +56,20 @@ public class RenameInterleave {
                 System.out.println("Reading from " + firstFilename);
                 System.out.println("Reading from " + secondFilename);
                 System.out.println("Reading from " + thirdFilename);
-                System.out.println("Renamed to " + "renamed_" + (ctr-3) + ".png");
-                System.out.println("Renamed to " + "renamed_" + (ctr-2) + ".png");
-                System.out.println("Renamed to " + "renamed_" + (ctr-1) + ".png");
+                System.out.println("Renamed to " + "renamed_" + ctr1 + ".png");
+                System.out.println("Renamed to " + "renamed_" + ctr2 + ".png");
+                System.out.println("Renamed to " + "renamed_" + ctr3 + ".png");
             } else {
                 System.out.println("Operation Failed");
             }
         }
+    }
+
+    public static String padWithZeros(int num, int num_zeros) {
+        String num_str = String.valueOf(num);
+        while (num_str.length() < 4) {
+            num_str = '0' + num_str;
+        }
+        return num_str;
     }
 }
