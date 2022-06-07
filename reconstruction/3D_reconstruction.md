@@ -17,7 +17,7 @@ Here is an example of a command for 2D reconstruction from a video at the locati
 `./build/examples/openpose/openpose.bin --video Videos/video0_2022-03-11-10-06-04.avi --hand --face --write_json keypoints/2d_keypoints_2 --display 0 --render_pose 0`
 
 ## 3D Reconstruction
-For 3D reconstruction, I only figured out how to do it with an image directory; however, if there is a way to directly input video(s), please let me know.
+For 3D reconstruction, I figured out how to do it with an image directory; however, if there is a way to directly input video(s), please let me know.
 
 Make sure your calibration matrices (xml files) are in the directory `openpose/models/cameraParameters/flir`. See `detailed_calibration_documentation.md` located in the `reconstruction` directory for instructions on how to generate calibration matrices.
 
