@@ -46,7 +46,7 @@ Then, you can run the following command where
 * `--render 0` specifies that we don't want the skeletons to be superimposed on the video popup.
 
 Here is the full command:
-`./build/examples/openpose/openpose.bin --image_dir Pictures/images_for_reconstruction --3d_views 3 --3d --frame_undistort true --number_people_max 1 --hand --face --write_json keypoints/3D_keypoints_1 --display 0 --render_pose 0`
+`./build/examples/openpose/openpose.bin --image_dir ../Pictures/images_for_reconstruction --3d_views 3 --3d --frame_undistort true --number_people_max 1 --hand --face --write_json ../keypoints/3D_keypoints_1 --display 0 --render_pose 0`
 
 All of these steps take over 12 hours on CPU, but only about 10 minutes on GPU. 
 

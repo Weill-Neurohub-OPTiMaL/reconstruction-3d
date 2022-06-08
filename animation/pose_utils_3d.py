@@ -21,7 +21,7 @@ def draw_cylinder(p0, p1):
     #axis and radius
     # p0 = np.array([1, 3, 2])
     # p1 = np.array([8, 5, 9])
-    R = 0.01
+    R = 0.025
     #vector in direction of axis
     v = p1 - p0
     print("v: ", v)
@@ -136,16 +136,16 @@ def draw_body_segment(frame_data, kp_idx, ax):
         y = [-1 * segment_data[0][1], -1 * segment_data[1][1]]
         z = [-1 * segment_data[0][2], -1 * segment_data[1][2]]
     # plot the segment
-    # segment = ax.plot3D(x, y, z, clr + 'o-')
-    p0 = np.array([x[0], y[0], z[0]])
-    p1 = np.array([x[1], y[1], z[1]])
-    if p0[0] == p1[0] and p0[1] == p1[1] and p0[2] == p1[2]:
-        segment = ax.plot3D(x, y, z, clr + 'o-')
-    else:
-        cyl_x, cyl_y, cyl_z = draw_cylinder(p0, p1)
-        segment = ax.plot_surface(cyl_x, cyl_y, cyl_z)
-        segment = ax.plot3D(x, y, z, clr + 'o-')
-        ax.plot(*zip(p0, p1), clr + 'o-')
+    segment = ax.plot3D(x, y, z, clr + 'o-')
+    # p0 = np.array([x[0], y[0], z[0]])
+    # p1 = np.array([x[1], y[1], z[1]])
+    # if p0[0] == p1[0] and p0[1] == p1[1] and p0[2] == p1[2]:
+    #     segment = ax.plot3D(x, y, z, clr + 'o-')
+    # else:
+    #     cyl_x, cyl_y, cyl_z = draw_cylinder(p0, p1)
+    #     segment = ax.plot_surface(cyl_x, cyl_y, cyl_z)
+    #     segment = ax.plot3D(x, y, z, clr + 'o-')
+    #     ax.plot(*zip(p0, p1), clr + 'o-')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')

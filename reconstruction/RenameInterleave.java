@@ -23,27 +23,27 @@ public class RenameInterleave {
         int ctr = 1;
         for (int i = 1 ; i <= fileNames.length / NUM_CAMS ; i++) {
             
-            String num = padWithZeros(i, 4);
-            String firstFilename = "cam0-" + num + ".png";
-            String secondFilename = "cam4-" + num + ".png";
-            String thirdFilename = "cam8-" + num + ".png";
+            // String num = padWithZeros(i, 3);
+            String firstFilename = "cam0 (" + i + ").png";
+            String secondFilename = "cam4 (" + i + ").png";
+            String thirdFilename = "cam8 (" + i + ").png";
 
 
-            String ctr1 = padWithZeros(ctr, 4);
-            File file_1 = new File(dir_name + "/" + firstFilename);
-            File dest_1 = new File(dir_name + "/" + "renamed_" + ctr1 + ".png");
-
-            ctr++;
-
-            String ctr2 = padWithZeros(ctr, 4);
-            File file_2 = new File(dir_name + "/" + secondFilename);
-            File dest_2 = new File(dir_name + "/" + "renamed_" + ctr2 + ".png");
+            String ctr1 = padWithZeros(ctr, 5);
+            File file_1 = new File(dir_name + "\\" + firstFilename);
+            File dest_1 = new File(dir_name + "\\" + "renamed_" + ctr1 + ".png");
 
             ctr++;
 
-            String ctr3 = padWithZeros(ctr, 4);
-            File file_3 = new File(dir_name + "/" + thirdFilename);
-            File dest_3 = new File(dir_name + "/" + "renamed_" + ctr3 + ".png");
+            String ctr2 = padWithZeros(ctr, 5);
+            File file_2 = new File(dir_name + "\\" + secondFilename);
+            File dest_2 = new File(dir_name + "\\" + "renamed_" + ctr2 + ".png");
+
+            ctr++;
+
+            String ctr3 = padWithZeros(ctr, 5);
+            File file_3 = new File(dir_name + "\\" + thirdFilename);
+            File dest_3 = new File(dir_name + "\\" + "renamed_" + ctr3 + ".png");
 
             ctr++;
 
@@ -67,7 +67,7 @@ public class RenameInterleave {
 
     public static String padWithZeros(int num, int num_zeros) {
         String num_str = String.valueOf(num);
-        while (num_str.length() < 4) {
+        while (num_str.length() < num_zeros) {
             num_str = '0' + num_str;
         }
         return num_str;
