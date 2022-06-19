@@ -40,7 +40,7 @@ Then, you can run the following command where
 * `Pictures/images_for_reconstruction` is the interleaved image directory.
 * `keypoints/3D_keypoints_1` is the directory that we want the generated json files containing the 3D keypoints to be located.
 * `--3d_views` is the number of cameras.
-* `--frame_undistort true` specifies that we are using calibration matrices and we need to perform undistortion before we construct.
+* `--frame_undistort true` specifies that we are using calibration matrices and we need to perform undistortion before we reconstruct.
 * `--hand` and `--face` specify that in addition to body, we want to do reconstruction on the face, right hand, and left hand.
 * `--display 0` specifies that we don't want the UI with the video to open up.
 * `--render 0` specifies that we don't want the skeletons to be superimposed on the video popup.
@@ -48,12 +48,12 @@ Then, you can run the following command where
 Here is the full command:
 `./build/examples/openpose/openpose.bin --image_dir ../Pictures/images_for_reconstruction --3d_views 3 --3d --frame_undistort true --number_people_max 1 --hand --face --write_json ../keypoints/3D_keypoints_1 --display 0 --render_pose 0`
 
-All of these steps take over 12 hours on CPU, but only about 10 minutes on GPU. 
+All of these steps take over 14 hours on CPU, but less than 30 minutes total on GPU. 
 
 ## Time for each 3D reconstruction step (running on GPU)
 1) **Splitting a 2 min video at 30 fps with ffmpeg:** ~4-5 mins <!-- 3m58.438s, 4m14.477s, 4m42.389s -->
 2) **Running RenameInterleave.java on the merged directory (10800 images):** ~1 sec <!-- 0m0.890s -->
-3) **Running 3D reconstruction on the renamed images from step 4:** ~20 mins <!-- 20m9.717s -->
+3) **Running 3D reconstruction on the renamed images from step 2:** ~20 mins <!-- 20m9.717s -->
 
 ## Using ffpmeg
 Download ffmpeg here: https://ffmpeg.org/. Detailed instructions for downloading are here: https://www.wikihow.com/Install-FFmpeg-on-Windows. You can run the command following command to get the images:
