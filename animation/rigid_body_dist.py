@@ -268,9 +268,9 @@ def plot_histograms_opposite_pairs(kp_df, csv_date, frame_rate, fig_num):
         legend_list = []
         for j in range(num_distances_per_graph):
             curr_index = (num_distances_per_graph*i)+j
-            # if len(distances[curr_index]) < (thresh*kp_df.shape[0]):
-            #     skipped += 1
-            #     continue
+            if len(distances[curr_index]) < (thresh*kp_df.shape[0]):
+                skipped += 1
+                continue
             y = distances[curr_index]
             axs[x_grid_idx, y_grid_idx].hist(y, color=colors[curr_index], alpha=0.75)
             legend_list.append(distance_labels[curr_index])
