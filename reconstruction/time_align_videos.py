@@ -11,7 +11,7 @@ from datetime import datetime
 from datetime import time
 
 
-def get_time_increments(dir):
+def get_beginning_time_increments(dir):
     max_timestamp = ''
     filenames = os.listdir(dir)
     first_timestamps = []
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     # pose_csv = r'C:\Users\User\CSE600\align-videos\cfr_timestamps_video0_2021-10-25.csv'
 
     dir = args[0]
-    microsecond_time_increments, num_row_increments = get_time_increments(dir)
+    microsecond_time_increments, num_row_increments = get_beginning_time_increments(dir)
     print("microsecond_time_increments: ", microsecond_time_increments)
     print("num_row_increments: ", num_row_increments)
 
