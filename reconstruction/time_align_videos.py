@@ -11,7 +11,7 @@ from datetime import datetime
 from datetime import time
 
 
-def get_beginning_time_increments(dir):
+def get_beginning_time_offsets(dir):
     max_timestamp = ''
     filenames = os.listdir(dir)
     first_timestamps = []
@@ -31,20 +31,28 @@ def get_beginning_time_increments(dir):
                 max_timestamp = first_timestamp
 
     interval = 1000000/30
-    microsecond_time_increments = []
-    num_row_increments = []
+    beginning_time_offsets = []
+    num_row_offsets = []
 
     for first_timestamp in first_timestamps:
         diff = max_timestamp - first_timestamp
 
         total_microseconds = (diff.seconds * 1000000) + diff.microseconds
-        microsecond_time_increments.append(total_microseconds)
+        beginning_time_offsets.append(total_microseconds)
 
-        num_row_increment = total_microseconds / interval
-        num_row_increments.append(num_row_increment)
+        num_row_offset = total_microseconds / interval
+        num_row_offsets.append(num_row_offset)
 
-    return microsecond_time_increments, num_row_increments
+    return beginning_time_offsets, num_row_offsets
 
+
+def get_end_time_offsets(beginning_time_offsets):
+    max_beginning_time_offset = max(beginning_time_offsets)
+    end_time_offsets = []
+    for beginning_time_offset in beginning_time_offsets:
+        end_time_offsets.append(max_beginning_time_offset - beginning_time_offset)
+    
+    return end_time_offsets
     
 
 if __name__ == "__main__":
@@ -52,8 +60,9 @@ if __name__ == "__main__":
     # pose_csv = r'C:\Users\User\CSE600\align-videos\cfr_timestamps_video0_2021-10-25.csv'
 
     dir = args[0]
-    microsecond_time_increments, num_row_increments = get_beginning_time_increments(dir)
-    print("microsecond_time_increments: ", microsecond_time_increments)
-    print("num_row_increments: ", num_row_increments)
-
+    beginning_time_offsets, num_row_offsets = get_beginning_time_offsets(dir)
+    end_time_offsets = get_end_time_offsets(beginning_time_offsets)
+    print("num_row_offsets: ", num_row_offsets)
+    print("beginning_time_offsets: ", beginning_time_offsets)
+    print("end_time_offsets: ", end_time_offsets)
 
