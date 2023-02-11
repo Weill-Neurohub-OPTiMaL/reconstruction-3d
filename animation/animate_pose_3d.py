@@ -19,7 +19,9 @@ warnings.filterwarnings('ignore')
 # Paths & vars
 # pose_folder = r'D:\Neurohub Systems\DataNet\temp-data\20211117'
 # pose_csv = r'D:\Neurohub Systems\DataNet\temp-data\raw_pose_json\20211117\pose_video0_2021-11-17-20-08-03.csv'
-pose_csv = r'C:\Users\User\CSE600\wasabi_videos\3-11-22_videos\03-11-22_pose_3d.csv'
+# pose_csv = r'C:\Users\User\CSE600\wasabi_videos\3-11-22_videos\03-11-22_pose_3d.csv'
+# pose_csv = r'C:\Users\User\CSE600\reconstruction-3d\animation\3d_keypoints\Winter_Quarter_2023_Keypoints\03-11-22-on-01-29-23_HD.csv'  # HD
+pose_csv = r'C:\Users\User\CSE600\reconstruction-3d\animation\3d_keypoints\Winter_Quarter_2023_Keypoints\03-11-22-on-01-30-23_4K.csv'  # 4K
 
 # def add_datetime(df, t_str):
 #     df['time_secs'] = pd.to_datetime(df[t_str], unit='ms') \
@@ -44,7 +46,9 @@ ax_3d = plt.axes(projection="3d")
 segments = draw_body_frame(segments, kp_df.iloc[0], ax_3d)
 ax_window = 6
 
-cap = cv2.VideoCapture(r"C:\Users\User\CSE600\wasabi_videos\11-17-21_videos\video0_2021-11-17-20-08-03_10s.mov")
+# cap = cv2.VideoCapture(r"C:\Users\User\CSE600\wasabi_videos\11-17-21_videos\video0_2021-11-17-20-08-03_10s.mov")
+# cap = cv2.VideoCapture(r"C:\Users\User\CSE600\videos\03-11-22\shortened_10s\HD\video_0_trimmed_HD.avi")  # HD
+cap = cv2.VideoCapture(r"C:\Users\User\CSE600\videos\03-11-22\shortened_10s\4K\video_0_trimmed.avi")  # 4K
 user32 = ctypes.windll.user32
 screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 

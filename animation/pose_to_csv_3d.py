@@ -186,12 +186,13 @@ def json_to_csv(source_dir, save_path):
     Current implementation assumes the BODY_25 output from OpenPose
     """
     print("entered json_to_csv")
-    video_name = os.path.basename(os.path.normpath(save_path)) + "_" + source_dir.split("/")[-1]
-    out_name = os.path.join(os.path.dirname(save_path), f'pose_{video_name}.csv')
+    # video_name = os.path.basename(os.path.normpath(save_path)) + "_" + source_dir.split("/")[-1]
+    # out_name = os.path.join(os.path.dirname(save_path), f'pose_{video_name}.csv')
 
     files = [f for f in os.listdir(source_dir) if '.json' in f]
-    print("files: ", files)
+    # print("files: ", files)
     files.sort(key=natural_keys)
+    # print("files: ", files)
     n_frames = len(files)
     all_pose = np.zeros((n_frames, N_POINTS*N_COORDS))
     all_ids = []
@@ -202,7 +203,7 @@ def json_to_csv(source_dir, save_path):
 
         # Extract the frame id from the file name
         print("f: ", f)
-        id = int(re.search('_([0-9]{1,3})_keypoints', f).group(1))
+        id = int(re.search('_([0-9]{1,5})_keypoints', f).group(1))
         all_ids.append(id)
 
         # Collect all keypoints into a single long list
@@ -237,7 +238,8 @@ def json_to_csv(source_dir, save_path):
     # out_name = os.path.join(os.path.dirname(save_path), f'pose_{video_name}.csv')
     # print("csv name:", out_name)
     # out_name = os.path.dirname(save_path) + '/json_to_csv_3d/pose_3d.csv'
-    out_name = os.path.dirname(save_path) + 'C:/Users/User/CSE600/reconstruction-3d/animation/3d_keypoints/3-11-22_3d.csv'
+    # out_name = os.path.dirname(save_path) + 'C:/Users/User/CSE600/reconstruction-3d/animation/3d_keypoints/Winter Quarter 2023 Keypoints/03-11-22-on-01-29-23_HD.csv'
+    out_name = 'C:/Users/User/CSE600/reconstruction-3d/animation/3d_keypoints/Winter_Quarter_2023_Keypoints/03-11-22-on-01-30-23_4K.csv'
     print("out_name: ", out_name)
     # out_name = 'C:/Users/User/CSE600/wasabi_videos/11-17-21_videos/11-17-21_3d-keypoints'
     pose_df.to_csv(out_name)
@@ -246,16 +248,20 @@ def json_to_csv(source_dir, save_path):
 if __name__ == '__main__':
     print("entered main")
     args = sys.argv[1:]
+    print("args length: ", len(args))
+    print("args: ", args)
     source = args[0]
     save = args[1]
 
     print("source: ", source)
     print("save: ", save)
-    print("os.listdir(source): ", os.listdir(source))
+    # print("os.listdir(source): ", os.listdir(source))
 
-    folders = [os.path.join(source, f) for f in os.listdir(source) if os.path.isdir(os.path.join(source, f))]
-    print("folders: ", folders)
-    folders.sort(key=natural_keys)
-    for folder in folders:
-        print("about to enter json_to_csv")
-        json_to_csv(folder, save)
+    # folders = [os.path.join(source, f) for f in os.listdir(source) if os.path.isdir(os.path.join(source, f))]
+    # print("folders: ", folders)
+    # folders.sort(key=natural_keys)
+    # for folder in folders:
+        # print("about to enter json_to_csv")
+        # json_to_csv(folder, save)
+
+    json_to_csv(source, save)

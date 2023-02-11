@@ -21,9 +21,11 @@ For 3D reconstruction, I figured out how to do it with an image directory; howev
 
 Make sure your calibration matrices (xml files) are in the directory `openpose/models/cameraParameters/flir`. See `detailed_calibration_documentation.md` located in the `reconstruction` directory for instructions on how to generate calibration matrices.
 
-Obtain videos from each of your cameras. Each of these videos has to start at the exact same time. Your videos and images must be from the same cameras in the same setup that generated your calibration matrices. 
+Obtain videos from each of your cameras. Each of these videos has to start at the exact same time. I used DaVinci Resolve, a video editing software, to align the start times of the videos. You can also use ffmpeg (command below in the "ffmpeg" section). Your videos and images must be from the same cameras in the same setup that generated your calibration matrices.
 
-Use ffmpeg to split each of the videos at a frame rate of 30 fps. See the "ffmpeg" section below for more detailed instructions. For the `cam#` part of the ffmpeg command, make sure to input the camera number of the video you are splitting.
+Convert to HD (or leave in 4K) using the ffmpeg command in the "ffmpeg" section.
+
+Use ffmpeg to split each of the videos at a frame rate of 30 fps (command below in the "ffmpeg" section). For the `cam#` part of the ffmpeg command, make sure to input the camera number of the video you are splitting.
 <!--- I would recommend creating 3 different directories (one for each camera) with each directory containing the images in the same order of the video progression. For 3 cameras, rename the images in the camera 0 directory as "cam0 (1)", "cam0 (2)", "cam0 (3)", etc. Then, rename the images in the camera 4 directory as "cam4 (1)", "cam4 (2)", "cam4 (3)", etc. and the images in the camera 8 directory as "cam8 (1)", "cam8 (2)", "cam8 (3)", etc. Windows file explorer allows you to batch rename with the following steps:
 1) Select (highlight) all the files you want to rename.
 2) Right-click the first of the highlighted files and click “Rename.”
@@ -45,10 +47,12 @@ Then, you can run the following command where
 * `--display 0` specifies that we don't want the UI with the video to open up.
 * `--render 0` specifies that we don't want the skeletons to be superimposed on the video popup.
 
-Here is the full command:
+Here is the full command (on Linux/Mac):
 `./build/examples/openpose/openpose.bin --image_dir ../Pictures/images_for_reconstruction --3d_views 3 --3d --frame_undistort true --number_people_max 1 --hand --face --write_json ../keypoints/3D_keypoints_1 --display 0 --render_pose 0`
 
-All of these steps take over 14 hours on CPU, but less than 30 minutes total on GPU. 
+On Windows, the executable is in `./build/x64/Release/OpenPoseDemo.exe`, and the rest of the command is the same.
+
+For a 2 minute video, all of these steps take over 14 hours on CPU, but less than 30 minutes total on GPU. 
 
 ## Time for each 3D reconstruction step (running on GPU)
 1) **Splitting a 2 min video at 30 fps with ffmpeg:** ~4-5 mins <!-- 3m58.438s, 4m14.477s, 4m42.389s -->
@@ -58,10 +62,26 @@ All of these steps take over 14 hours on CPU, but less than 30 minutes total on 
 ## Using ffpmeg
 Download ffmpeg here: https://ffmpeg.org/. Detailed instructions for downloading are here: https://www.wikihow.com/Install-FFmpeg-on-Windows. You can run the command following command to get the images:
 
+### Trim beginning and end of a video (maintains frame rate and resolution)
+`ffmpeg -ss 0 -i video0_2022-03-11-10-06-04.avi -vf "trim=start_frame=56:end_frame=356,setpts=PTS-STARTPTS" -c:a copy video_0_trimmed.avi`
+* -i specifies the name of the video file
+* start_frame and end_frame specify the start and end frames
+* -c:a copy specifies the output file name
+
+### Convert video to HD resolution (1920x1080):
+`ffmpeg -i ../4K/video_4_trimmed.avi -vf scale=1920:1080 -c:a copy video_4_trimmed_HD.avi`
+* -i specifies the name of the video file you want to convert
+* scale=res_width:res_height specifies the HD resolution for width and height
+* -c:a copy specifies the output file name
+
+### Split video into images at a certain frame rate
 `ffmpeg -i videofile.avi -r 30 cam#-%05d.png`
 * -i specifies the name of the video file
 * -r specifies the rate of frames to capture. For example, 1 will save a frame every second, 0.5 will save every 2 seconds, 0.2 every 5 seconds, and 30 every 1/30th of a second.
-* The last parameter is the name of the output images. For the above example, the images will be named `image-00001`, `image-00002`, etc.
+* The last parameter is the name of the output images. For the above example, the images will be named `cam0-00001`, `cam0-00002`, etc. if the "#" is replaced with 0.
+
+
+
 
 ## Using scp
 To copy files from your local machine to the remote machine, use the following command:
@@ -72,5 +92,6 @@ To copy files from your local machine to the remote machine, use the following c
 
 
 
-
+## Common issues
+* Make sure your 3 calibration matrices are located in the correct directory (`openpose\models\cameraParameters\flir`) and they are in the correct resolution (HD vs 4K). 
 

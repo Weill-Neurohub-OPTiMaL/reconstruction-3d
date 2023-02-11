@@ -45,7 +45,7 @@ This will create a directory called `images_with_corners` inside the `{intrinsic
 5) Run the calibration executable between each pair of cameras. There are two flags `--cam0` and `--cam1`. The parameters for these cameras are integers starting from 0 corresponding to an individual camera. 0 is the leftmost camera, 1 is the camera to the right of the 0th camera, and so on. If you have two cameras, here is an example command. You have to be in the outer most `openpose` directory for this or else you won't be able to access your intrinsic xml files: `./build/x64/Release/Calibration.exe --mode 2 --grid_square_size_mm 30.0 --grid_number_inner_corners 8x6 --omit_distortion --calibration_image_dir {consolidated_extrinsic_undistorted_images} --cam0 0 --cam1 1`. This will output your final projection matrix to the terminal. It should be a 3x4 matrix.
 
 ## Using ffmpeg
-FFmpeg is a free and open source software project that you can use to extract iamges at a certain frame rate from a video.
+FFmpeg is a free and open source software project that you can use to extract images at a certain frame rate from a video.
 
 Download it here: https://ffmpeg.org/. Detailed instructions for downloading are here: https://www.wikihow.com/Install-FFmpeg-on-Windows. You can run the command following command to get the images:
 
