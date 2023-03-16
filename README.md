@@ -1,4 +1,5 @@
 # reconstruction-3d
+## Author: Nayha Auradkar, nayhaa@cs.washington.edu
 Contains calibration, reconstruction, and animation code and documentation for 3D reconstruction in OpenPose. Separated into 1) calibration 2) reconstruction and 3) animation folders. Assumes that you already have the OpenPose repo cloned on your machine and that you are not using flir cameras.
 
 ## calibration
