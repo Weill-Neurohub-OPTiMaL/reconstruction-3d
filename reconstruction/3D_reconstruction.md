@@ -79,18 +79,18 @@ For a 2 minute video, all of these steps take over 14 hours on CPU, but less tha
 ## Using ffpmeg
 Download ffmpeg here: https://ffmpeg.org/. Detailed instructions for downloading are here: https://www.wikihow.com/Install-FFmpeg-on-Windows. You can run the command following command to get the images:
 
-### Trim the beginning and end of a video:
+### Trim the beginning and end of a video
 `ffmpeg -ss 0 -i video0_2022-03-11-10-06-04.avi -vf "trim=start_frame=56:end_frame=356,setpts=PTS-STARTPTS" -c:a copy video_0_trimmed.avi`
 * -i specifies the name of the video file
 * start_frame and end_frame specify the start and end frames
 * -c:a copy specifies the output file name
 
-### Convert to HD:
+### Convert to HD
 `ffmpeg -i /storage/20211117/video0_2021-11-17T20:00:00.011614/video0_2021-11-17-20-00-02.avi -vf scale=1920:1080 -c mjpeg /storage/20211117/video0_2021-11-17T20:00:00.011614_HD/video0_2021-11-17-20-00-02_HD.avi`
 * -i specifies the name of the video file you want to convert
 * scale=res_width:res_height specifies the HD resolution for width and height.
 
-### Split a video into images:
+### Split a video into images
 `ffmpeg -i video.avi -vcodec copy cam#_%06d.jpg`
 * -i specifies the name of the video file
 * The last parameter is the name of the output images. For the above example, if we are using cam0, the images will be named `cam0-000001`, `cam0-000002`, etc. if the "#" is replaced with 0. The 6 is to indicate that there are going to be a number of images in the 6 digits (suitable for 1 hour long videos). If you think you will have a fewer or more number of images based on the length of the videos you're using, change the number accordingly.

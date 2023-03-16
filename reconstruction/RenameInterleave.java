@@ -4,6 +4,8 @@ import java.util.*;
 public class RenameInterleave {
 
     public static final int NUM_CAMS = 3;
+    public static final int NUM_WIDTH = 6;
+    public static final String SLASH = "/";
 
     public static void main(String[] args) throws IOException {
 
@@ -23,27 +25,27 @@ public class RenameInterleave {
         int ctr = 1;
         for (int i = 1 ; i <= fileNames.length / NUM_CAMS ; i++) {
             
-            // String num = padWithZeros(i, 3);
-            String firstFilename = "cam0 (" + i + ").png";
-            String secondFilename = "cam4 (" + i + ").png";
-            String thirdFilename = "cam8 (" + i + ").png";
+            String num = padWithZeros(i, NUM_WIDTH);
+            String firstFilename = "cam0_" + num + ".jpg";
+            String secondFilename = "cam4_" + num + ".jpg";
+            String thirdFilename = "cam8_" + num + ".jpg";
 
 
-            String ctr1 = padWithZeros(ctr, 5);
-            File file_1 = new File(dir_name + "\\" + firstFilename);
-            File dest_1 = new File(dir_name + "\\" + "renamed_" + ctr1 + ".png");
-
-            ctr++;
-
-            String ctr2 = padWithZeros(ctr, 5);
-            File file_2 = new File(dir_name + "\\" + secondFilename);
-            File dest_2 = new File(dir_name + "\\" + "renamed_" + ctr2 + ".png");
+            String ctr1 = padWithZeros(ctr, NUM_WIDTH);
+            File file_1 = new File(dir_name + SLASH + firstFilename);
+            File dest_1 = new File(dir_name + SLASH + "renamed_" + ctr1 + ".jpg");
 
             ctr++;
 
-            String ctr3 = padWithZeros(ctr, 5);
-            File file_3 = new File(dir_name + "\\" + thirdFilename);
-            File dest_3 = new File(dir_name + "\\" + "renamed_" + ctr3 + ".png");
+            String ctr2 = padWithZeros(ctr, NUM_WIDTH);
+            File file_2 = new File(dir_name + SLASH + secondFilename);
+            File dest_2 = new File(dir_name + SLASH + "renamed_" + ctr2 + ".jpg");
+
+            ctr++;
+
+            String ctr3 = padWithZeros(ctr, NUM_WIDTH);
+            File file_3 = new File(dir_name + SLASH + thirdFilename);
+            File dest_3 = new File(dir_name + SLASH + "renamed_" + ctr3 + ".jpg");
 
             ctr++;
 
